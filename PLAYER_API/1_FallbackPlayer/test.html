@@ -1,0 +1,236 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+	<title>Test Utilities for YouTube Player API JS</title>
+	<style type="text/css">
+		.videoSec {
+			position: relative;
+			z-index:1111;
+		}
+	</style>
+</head>
+<body>
+<div class="videoSec">
+<div id="player1"></div>
+</div>
+<div class="videoSec">
+<div id="player2"></div>
+</div>
+<div class="videoSec">
+<div id="player3"></div>
+</div>
+<div class="videoSec">
+<div id="player4"></div>
+</div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="../../src/youtubeutil.Common.js"></script>
+<script src="../../src/youtubeutil.playerapi.FallbackPlayer.js"></script>
+<script type="text/javascript">
+// Avoid `console` errors in browsers that lack a console.
+(function() {
+    var method;
+    var noop = function noop() {};
+    var methods = [
+        'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+        'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+        'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+        'timeStamp', 'trace', 'warn'
+    ];
+    var length = methods.length;
+    var console = (window.console = window.console || {});
+
+    while (length--) {
+        method = methods[length];
+
+        // Only stub undefined methods.
+        if (!console[method]) {
+            console[method] = noop;
+        }
+    }
+}());
+
+	$(function(){
+		"use strict";
+		new youtubeutil.playerapi.FallbackPlayer("player1", "GH9ON_EgoL8", null, null, onReady, {autoplay:1, version:2, rel:0});
+		new youtubeutil.playerapi.FallbackPlayer("player2", "GH9ON_EgoL8", null, null, onReady, {autoplay:0, version:1, rel:0});
+		new youtubeutil.playerapi.FallbackPlayer("player3", "GH9ON_EgoL8", null, null, onReady, {autoplay:0, version:2, rel:0});
+		new youtubeutil.playerapi.FallbackPlayer("player4", "GH9ON_EgoL8", null, null, onReady, {autoplay:0, version:3, rel:0});
+	});
+
+	/**
+	 *
+	 * @param defaurtArg {object || string}
+	 * 		onReady 元々の引数
+	 * 			Iframe API：イベントオブジェクト
+	 * 			embed API：ID名
+	 * @param player {object}
+	 * 		Iframe API ： YTプレーヤーオブジェクト
+	 * 		embed API ： DOMプレーヤーオブジェクト
+	 * @param isIFrame {boolean} Iframe APIを使用しているか?
+	 */
+	function onReady(defaurtArg, player, isIFrame) {
+		"use strict";
+
+		var $div,
+			$playerDom,
+			$nav;
+
+		if(isIFrame){
+			$playerDom = $(player.getIframe());
+			player.addEventListener("onStateChange", "onStateChangeIFrame");
+
+		} else {
+			$playerDom = $(player);
+			player.addEventListener("onStateChange", "onStateChangeEmbed"+defaurtArg.split("player")[1]);
+		}
+		$nav = $("<nav></nav>")
+				.css({
+					"margin" : "5px 0 0 0"
+				});
+		$div = $("<div><p></p></div>")
+			.addClass("consol")
+			.css({
+				"position" : "absolute",
+				"height" : $playerDom.height()+"px",
+				"width" : "100%",
+				"top":"0",
+				"left":"640px"
+			})
+			.append($nav)
+			.appendTo($playerDom.parent());
+		$div
+			.find("p")
+			.css({
+				backgroundColor:"#eeeeee"
+			});
+		createButton("VAf4x4yuA30", $nav, player);
+		createButton("Clp9AeBdgL0", $nav, player);
+		createButton("bHRbEhLj540", $nav, player);
+	}
+
+	function createButton(videoId, $nav, player) {
+		$("<button></button>")
+			.css({
+				"display" : "block",
+				"margin" : "5px 0 0 0"
+			})
+			.text(videoId+" に cueVideoById")
+			.click(function() {
+				player.cueVideoById(videoId)
+			})
+			.appendTo($nav);
+
+		$("<button></button>")
+			.css({
+				"display" : "block",
+				"margin" : "5px 0 0 0"
+			})
+			.text(videoId+" に loadVideoById")
+			.click(function() {
+				player.loadVideoById(videoId)
+			})
+			.appendTo($nav);
+	}
+
+	function onStateChangeIFrame(e) {
+		"use strict";
+		var $playerDom = $(e.target.getIframe());
+		var stateName = "onStateChange / ";
+		var _state = e.data;
+		switch (_state) {
+
+			case -1 :
+				stateName+="unstarted";
+				break;
+
+			case YT.PlayerState.ENDED :// 0 :
+				stateName+="ended";
+				break;
+
+			case YT.PlayerState.PLAYING :// 1 :
+				stateName+="playing";
+				break;
+
+			case YT.PlayerState.PAUSED :// 2 :
+				stateName+="paused";
+				break;
+
+			case YT.PlayerState.BUFFERING ://3 :
+				stateName+="buffering";
+				break;
+
+			case YT.PlayerState.CUED ://5 :
+				stateName+="video cued";
+				break;
+		}
+		console.log($playerDom.attr("id"));
+		console.log(stateName+" ::", _state);
+		$playerDom
+			.parent()
+			.find("p")
+			.text(stateName);
+	}
+
+	function onStateChangeEmbed1(state) {
+		onStateChangeEmbed(state, 1);
+	}
+
+	function onStateChangeEmbed2(state) {
+		onStateChangeEmbed(state, 2);
+	}
+
+	function onStateChangeEmbed3(state) {
+		onStateChangeEmbed(state, 3);
+	}
+
+	function onStateChangeEmbed4(state) {
+		onStateChangeEmbed(state, 4);
+	}
+
+	function onStateChangeEmbed(state, domNum) {
+		"use strict";
+		var $playerDom = $("#player"+domNum);
+		var stateName = "onStateChange / ";
+		var _state = state;
+		switch (_state) {
+
+			case -1 :
+				stateName+="unstarted";
+				break;
+
+			case 0 :
+				stateName+="ended";
+				break;
+
+			case 1 :
+				stateName+="playing";
+				break;
+
+			case 2 :
+				stateName+="paused";
+				break;
+
+			case 3 :
+				stateName+="buffering";
+				break;
+
+			case 5 :
+				stateName+="video cued";
+				break;
+		}
+		console.log($playerDom.attr("id"));
+		console.log(stateName+" ::", _state);
+		$playerDom
+			.parent()
+			.find("p")
+			.text(stateName);
+	}
+
+</script>
+</body>
+</html>
