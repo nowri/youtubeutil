@@ -13,45 +13,43 @@
  * jquery.youtubeutil.dataapi.FeedClient
  *
  * 各YouTube Data APIにリクエストしてレスポンスをObjectで返してくれる
- *
+ * @see $.youtubeutil.events
  * @constructor
  */
 ;(function ($) {
 	"use strict";
 	$.youtubeutil = $.youtubeutil || {};
 	$.youtubeutil.dataapi = $.youtubeutil.dataapi || {};
+
 	$.youtubeutil.dataapi.FeedClient = (function(){
-		"use strict";
 		var _instance,
-		version = 2,
-		getInstance = function() {
-			"use strict";
+		version = 2;
+
+		function getInstance() {
 				if (_instance) {
 					return _instance;
 				}
 			return _instance = _FeedClient();
-		},
+		}
 
-		_FeedClient = function() {
-			"use strict";
+		function _FeedClient() {
 			//private Property
 			var _requestId = 0,
-			_requestQueue = [],
+			_requestQueue = [];
 
 			//public Methods
 			/**
 			 *
 			 * @param {string} videoId
 			 */
-			getVideo = function(videoId){
-				"use strict";
+			function getVideo(videoId) {
 				var url = "http://gdata.youtube.com/feeds/api/videos/" + videoId,
 				query = {
 					"v":""+version,
 					"alt":"json"
 				};
 				return runLoader(url, query, doVideoLoaded, { comment: "video", videoId: videoId } );
-			},
+			}
 
 			/**
 			 *
@@ -59,8 +57,7 @@
 			 * @param {object} option :	.startIndex はじめ default 1
 			 * 							.maxResults おわり default 50
 			 */
-			getPlaylist = function(playlistId, option){
-				"use strict";
+			function getPlaylist(playlistId, option) {
 				option = option || {};
 				var startIndex = option["startIndex"] || 1,
 				maxResults = option["maxResults"] || 50,
@@ -72,11 +69,10 @@
 				},
 				url = "http://gdata.youtube.com/feeds/api/playlists/" + playlistId;
 				return runLoader(url, query, doPlaylistLoaded, {callBack:option["callBack"], comment:"playlist", playlistId:playlistId } );
-			},
+			}
 
 			//private Methods
-			runLoader = function (url, query, doComplete, wrapper) {
-				"use strict";
+			function runLoader(url, query, doComplete, wrapper) {
 				wrapper.id = _requestId++;
 				wrapper.success = false;
 				_requestQueue.push(wrapper);
@@ -94,48 +90,39 @@
 					"crossDomain":true
 				})
 				.done((function(wrapper){
-					"use strict";
 					return function( data, textStatus) {
 						doComplete(data, wrapper);
 					}
 				})(wrapper))
 				.fail(function( data, textStatus) {
-					"use strict";
 				})
 				.always(function( data, textStatus) {
-					"use strict";
 				});
 				return _requestId - 1;
-			},
+			}
 
-			doPlaylistLoaded = function (result, wrapper) {
-				"use strict";
+			function doPlaylistLoaded(result, wrapper) {
 				if(typeof wrapper.callBack=="function"){
 					wrapper.callBack(wrapper.id, result);
 				}
 				$(that).trigger($.youtubeutil.events.VideoFeedEvent.VIDEO_PLAYLIST_DATA_RECEIVED, [wrapper.id, result]);
-			},
+			}
 
-			doVideoLoaded = function (result, wrapper) {
-				"use strict";
+			function doVideoLoaded(result, wrapper) {
 				if(typeof wrapper.callBack=="function"){
 					wrapper.callBack(wrapper.id, result);
 				}
 				$(that).trigger($.youtubeutil.events.VideoDataEvent.VIDEO_INFO_RECEIVED, [wrapper.id, result]);
-			},
+			}
 
-			that = {"getVideo":getVideo,
+			var that = {"getVideo":getVideo,
 				"getPlaylist":getPlaylist,
 				"version":version
 			};
 
 			return that;
-		};
+		}
 		return {"getInstance":getInstance};
 	})();
-
-	$.youtubeutil.events = $.youtubeutil.events || {};
-	$.youtubeutil.events.VideoFeedEvent = {"VIDEO_PLAYLIST_DATA_RECEIVED":"videoPlaylistDataReceived"};
-	$.youtubeutil.events.VideoDataEvent = {"VIDEO_INFO_RECEIVED":"videoInfoReceived"};
 
 }(jQuery));

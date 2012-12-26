@@ -25,7 +25,6 @@ youtubeutil.dataapi.FeedClient = (function() {
 	"use strict";
 	//constructor
 	var init = function(){
-		"use strict";
 		$feed = $.youtubeutil.dataapi.FeedClient.getInstance();
 		$($feed).on($.youtubeutil.events.VideoFeedEvent.VIDEO_PLAYLIST_DATA_RECEIVED, videoFeedEventHandler)
 	},
@@ -43,7 +42,6 @@ youtubeutil.dataapi.FeedClient = (function() {
 	 * @param {function} callBack
 	 */
 	var loadPlayLists = function(uid, lists, callBack) {
-		"use strict";
 		if(!setPlayListUID(uid)){
 			return false;
 		}
@@ -53,7 +51,6 @@ youtubeutil.dataapi.FeedClient = (function() {
 		var id;
 
 		runAcyncArray(lists, function(id) {
-			"use strict";
 			$feed.getPlaylist(id);
 		});
 		return true;
@@ -61,13 +58,11 @@ youtubeutil.dataapi.FeedClient = (function() {
 
 	//private Methods
 	runAcyncArray = function(params, onProcess) {
-		"use strict";
 		if(!params || !params.length){
 			return;
 		}
 		var paramList = params.concat();
 		(function() {
-			"use strict";
 			var startTime = new Date();
 			while ( 1 ) {
 				var curParam = paramList.shift();
@@ -84,7 +79,6 @@ youtubeutil.dataapi.FeedClient = (function() {
 	},
 
 	setPlayListUID = function(uid) {
-		"use strict";
 		for(var i= 0, len=_playListUidList.length; i<len; i++){
 			if(_playListUidList[i] == uid){
 				return false;
@@ -97,7 +91,6 @@ youtubeutil.dataapi.FeedClient = (function() {
 
 
 	setWorkLists = function(_feed) {
-		"use strict";
 		var plId = getPlayListID(_feed["yt$playlistId"]["$t"]);
 		var cueVO;
 		for(var i=0; i<_playListCueList.length; i++){
@@ -116,7 +109,6 @@ youtubeutil.dataapi.FeedClient = (function() {
 	},
 
 	checkState = function() {
-		"use strict";
 		var cueVO;
 		for(var i=0; i<_playListCueList.length; i++){
 			cueVO = _playListCueList[i];
@@ -166,7 +158,6 @@ youtubeutil.dataapi.FeedClient = (function() {
 	},
 
 	noteLoadComplete = function(cue_vo) {
-		"use strict";
 		for (var l = 0; l<_playListCueList.length; l++){
 			if(_playListCueList[l] == cue_vo){
 				_playListCueList.splice(l, 1);
@@ -230,7 +221,6 @@ youtubeutil.dataapi.FeedClient = (function() {
 	},
 
 	loadRemainPlayList = function(_feed) {
-		"use strict";
 		var id = getPlayListID(_feed["yt$playlistId"]["$t"]);
 		var len = getPlayListsCount(_feed["openSearch$totalResults"]["$t"])+1;
 		var ar = [];
@@ -243,7 +233,6 @@ youtubeutil.dataapi.FeedClient = (function() {
 	},
 
 	setVideoLists = function(_feed) {
-		"use strict";
 		var plID = getPlayListID(_feed["yt$playlistId"]["$t"]);
 		var index = getPlayListsCount(_feed["openSearch$startIndex"]["$t"]);
 		var j;
@@ -290,18 +279,15 @@ youtubeutil.dataapi.FeedClient = (function() {
 	},
 
 	getPlayListID = function(feedId) {
-		"use strict";
 		return feedId.split("PL")[1];
 	},
 
 	getPlayListsCount = function(index) {
-		"use strict";
 		return (index==1)? 0:Math.ceil(index/50)-1;
 	},
 
 	//Event Handler
 	videoFeedEventHandler = function(e, id, json) {
-		"use strict";
 		switch(e.type){
 			case $.youtubeutil.events.VideoFeedEvent.VIDEO_PLAYLIST_DATA_RECEIVED:
 				var _feed = json["feed"];
@@ -322,7 +308,6 @@ youtubeutil.dataapi.FeedClient = (function() {
 
 	//Classes
 	var CuePlayListVO = function(_uid, _lists, _callBack) {
-		"use strict";
 		this.uid = _uid;
 		this.lists = _lists;
 		this.callBack = _callBack;
@@ -330,7 +315,6 @@ youtubeutil.dataapi.FeedClient = (function() {
 		this.videoLists = [];
 	};
 	(function(p){
-		"use strict";
 		p.hasMe = function(pl_id) {
 			for (var i= 0,len=this.lists.length; i<len; i++){
 				if(this.lists[i]==pl_id){
@@ -344,7 +328,6 @@ youtubeutil.dataapi.FeedClient = (function() {
 
 
 	var WorkListVO = function(plId, length) {
-		"use strict";
 		var plID = plId,
 		arraySetted = [],
 		that = {

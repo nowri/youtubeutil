@@ -71,31 +71,30 @@ Function.prototype.bind||function(){var c=Array.prototype.slice;Function.prototy
  *
  */
 var youtubeutil = youtubeutil || {};
-/**
- *
- * @type {{runAcyncArray: Function}}
- */
-youtubeutil.Common = {
-	runAcyncArray : function(params, onProcess) {
-		"use strict";
-		if(!params || !params.length){
-			return;
-		}
-		var paramList = params.concat();
-		(function() {
-			"use strict";
-			var startTime = new Date();
-			while ( 1 ) {
-				var curParam = paramList.shift();
-				onProcess( curParam );
-				if ( paramList.length <= 0 ) {
-					return;
-				}
-				if ( (new Date()) - startTime > 100 ) {
-					break;
-				}
+(function(){
+	"use strict";
+	youtubeutil.Common = {
+		runAcyncArray : function(params, onProcess) {
+
+			if(!params || !params.length){
+				return;
 			}
-			setTimeout( youtubeutil.Common.runAcyncArray, 40 );
-		})();
-	}
-};
+			var paramList = params.concat();
+			(function() {
+				"use strict";
+				var startTime = new Date();
+				while ( 1 ) {
+					var curParam = paramList.shift();
+					onProcess( curParam );
+					if ( paramList.length <= 0 ) {
+						return;
+					}
+					if ( (new Date()) - startTime > 100 ) {
+						break;
+					}
+				}
+				setTimeout( youtubeutil.Common.runAcyncArray, 40 );
+			})();
+		}
+	};
+})();

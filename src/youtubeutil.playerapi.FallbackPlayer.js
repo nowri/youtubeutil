@@ -30,7 +30,6 @@ youtubeutil.playerapi = youtubeutil.playerapi || {};
 	 *
 	 */
 	var FallbackPlayer = function(embedId, videoId, videoWidth, videoHeight, onReady, playerVars) {
-		"use strict";
 		if(embedId && videoId) {
 			this.initPlayer(embedId, videoId, videoWidth, videoHeight, onReady, playerVars);
 		}
@@ -54,7 +53,6 @@ youtubeutil.playerapi = youtubeutil.playerapi || {};
 	 * @param playerVars
 	 */
 	p.initPlayer = function (embedId, videoId, videoWidth, videoHeight, onReady, playerVars) {
-		"use strict";
 
 		this.videoId = videoId;
 		this.embedId = embedId;
@@ -70,7 +68,6 @@ youtubeutil.playerapi = youtubeutil.playerapi || {};
 				FallbackPlayer.stateLoadPlayerAPICode = FallbackPlayer.STATE_LOAD_PLAYER_API_CODE_PROGRESS;
 				var self = this;
 				window.onYouTubeIframeAPIReady = function() {
-					"use strict";
 					FallbackPlayer.stateLoadPlayerAPICode = FallbackPlayer.STATE_LOAD_PLAYER_API_CODE_COMPLETE;
 					self._onYouTubeIframeAPIReady();
 					FallbackPlayer.runAcyncArray(
@@ -102,7 +99,6 @@ youtubeutil.playerapi = youtubeutil.playerapi || {};
 	// 3. This function creates an <iframe> (and YouTube player)
 	//    after the API code downloads.
 	p._onYouTubeIframeAPIReady = function() {
-			"use strict";
 			this.player = new YT.Player(this.embedId, {
 				width: (this.videoWidth)? this.videoWidth : '640',
 				height: (this.videoHeight)? this.videoHeight : '360',
@@ -117,7 +113,6 @@ youtubeutil.playerapi = youtubeutil.playerapi || {};
 
 	// 4. The API will call this function when the video player is ready.
 	p._onPlayerReady = function(event) {
-		"use strict";
 		if(typeof this.onReady === "function") {
 			this.onReady(event, event.target, true);
 		}
@@ -149,7 +144,6 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 	 * @constructor
 	 */
 	var FallbackPlayer = function(embedId, videoId, videoWidth, videoHeight, onReady, playerVars) {
-		"use strict";
 		if(embedId && videoId) {
 			this.initPlayer(embedId, videoId, videoWidth, videoHeight, onReady, playerVars);
 		}
@@ -167,7 +161,6 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 	 * @param playerVars
 	 */
 	p.initPlayer = function (embedId, videoId, videoWidth, videoHeight, onReady, playerVars) {
-		"use strict";
 		videoWidth =  (videoWidth)? videoWidth : '640';
 		videoHeight = (videoHeight)? videoHeight : '360';
 
