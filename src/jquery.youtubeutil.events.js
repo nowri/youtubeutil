@@ -9,14 +9,11 @@
 // Events
 //-------------------------------------------------------------------------------------------------------------------
 
-/**
- *
- * $.youtubeutil.events
- * @static
- */
+
 ;(function ($) {
 	"use strict";
 
+// namespace:
 	$.youtubeutil = $.youtubeutil || {};
 	var e = $.youtubeutil.events = $.youtubeutil.events || {};
 
@@ -24,6 +21,7 @@
 	 *
 	 * $.youtubeutil.events.VideoFeedEvent
 	 *
+	 * @static
 	 * @type {{VIDEO_PLAYLIST_DATA_RECEIVED: string}}
 	 */
 	e.VideoFeedEvent = {
@@ -33,7 +31,7 @@
 	/**
 	 *
 	 * $.youtubeutil.events.VideoDataEvent
-	 *
+	 * @static
 	 * @type {{VIDEO_INFO_RECEIVED: string}}
 	 */
 	e.VideoDataEvent = {

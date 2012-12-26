@@ -13,29 +13,21 @@
  * jquery.youtubeutil.dataapi.FeedClient
  *
  * 各YouTube Data APIにリクエストしてレスポンスをObjectで返してくれる
- * @see $.youtubeutil.events
- * @constructor
+ * @class FeedClient
+ * @uses $.youtubeutil.events
+ * @static
  */
 ;(function ($) {
 	"use strict";
 	$.youtubeutil = $.youtubeutil || {};
 	$.youtubeutil.dataapi = $.youtubeutil.dataapi || {};
+	$.youtubeutil.dataapi.FeedClient = (function() {
 
-	$.youtubeutil.dataapi.FeedClient = (function(){
-		var _instance,
-		version = 2;
 
-		function getInstance() {
-				if (_instance) {
-					return _instance;
-				}
-			return _instance = _FeedClient();
-		}
-
-		function _FeedClient() {
 			//private Property
 			var _requestId = 0,
-			_requestQueue = [];
+				_requestQueue = [],
+				version = 2;
 
 			//public Methods
 			/**
@@ -45,10 +37,10 @@
 			function getVideo(videoId) {
 				var url = "http://gdata.youtube.com/feeds/api/videos/" + videoId,
 				query = {
-					"v":""+version,
+					"v":""+ version,
 					"alt":"json"
 				};
-				return runLoader(url, query, doVideoLoaded, { comment: "video", videoId: videoId } );
+				return runLoader(url, query, doVideoLoaded, { comment: "video", _videoId: videoId } );
 			}
 
 			/**
@@ -115,14 +107,14 @@
 				$(that).trigger($.youtubeutil.events.VideoDataEvent.VIDEO_INFO_RECEIVED, [wrapper.id, result]);
 			}
 
-			var that = {"getVideo":getVideo,
+			var that = {
+				"getVideo":getVideo,
 				"getPlaylist":getPlaylist,
-				"version":version
+				"getVersion":function(){return version;},
+				"setVersion":function(_version){version = _version;}
 			};
 
 			return that;
-		}
-		return {"getInstance":getInstance};
 	})();
 
 }(jQuery));

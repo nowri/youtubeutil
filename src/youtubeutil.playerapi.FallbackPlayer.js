@@ -9,23 +9,23 @@
 // Utilities for PLAYER API
 //-------------------------------------------------------------------------------------------------------------------
 
-/**
- * youtubeutil.playerapi.FallbackPlayer
- *
- * @see youtubeutil.Common
- */
+// namespace:
 var youtubeutil = youtubeutil || {};
 youtubeutil.playerapi = youtubeutil.playerapi || {};
+
 (function(){
 	"use strict";
+
 	/**
 	 *
-	 * @param embedId
-	 * @param videoId
-	 * @param videoWidth
-	 * @param videoHeight
-	 * @param onReady
-	 * @param playerVars
+	 * @class FallbackPlayer
+	 * @param embedId {string}
+	 * @param videoId {string}
+	 * @param videoWidth {number}
+	 * @param videoHeight {number}
+	 * @param onReady {function}
+	 * @param playerVars {object}
+	 * @uses Common
 	 * @constructor
 	 *
 	 */
@@ -36,30 +36,42 @@ youtubeutil.playerapi = youtubeutil.playerapi || {};
 	},
 	p = FallbackPlayer.prototype;
 
-	tddjs.extend(FallbackPlayer, youtubeutil.Common);
-
 	FallbackPlayer.stateLoadPlayerAPICode =
 	FallbackPlayer.STATE_LOAD_PLAYER_API_CODE_NONE = -1;
 	FallbackPlayer.STATE_LOAD_PLAYER_API_CODE_PROGRESS = 0;
 	FallbackPlayer.STATE_LOAD_PLAYER_API_CODE_COMPLETE = 1;
 
+// mix-ins:
+	tddjs.extend(FallbackPlayer, youtubeutil.Common);
+
+
+// private properties:
+	p._videoId = null;
+	p._embedId = null;
+	p._videoWidth = 640;
+	p._videoHeight = 360;
+	p._onReady = null;
+	p._playerVars = null;
+
+// constructor:
 	/**
 	 *
-	 * @param embedId
-	 * @param videoId
-	 * @param videoWidth
-	 * @param videoHeight
-	 * @param onReady
-	 * @param playerVars
+	 * @method initPlayer
+	 * @param embedId {string}
+	 * @param videoId {string}
+	 * @param videoWidth {number}
+	 * @param videoHeight {number}
+	 * @param onReady {function}
+	 * @param playerVars {object}
 	 */
 	p.initPlayer = function (embedId, videoId, videoWidth, videoHeight, onReady, playerVars) {
 
-		this.videoId = videoId;
-		this.embedId = embedId;
-		this.videoWidth = videoWidth;
-		this.videoHeight = videoHeight;
-		this.onReady = onReady;
-		this.playerVars = playerVars;
+		this._videoId = videoId;
+		this._embedId = embedId;
+		this._videoWidth = videoWidth;
+		this._videoHeight = videoHeight;
+		this._onReady = onReady;
+		this._playerVars = playerVars;
 
 		switch (FallbackPlayer.stateLoadPlayerAPICode) {
 
@@ -95,17 +107,19 @@ youtubeutil.playerapi = youtubeutil.playerapi || {};
 
 		}
 	};
+// public methods:
 
+// private methods:
 	// 3. This function creates an <iframe> (and YouTube player)
 	//    after the API code downloads.
 	p._onYouTubeIframeAPIReady = function() {
-			this.player = new YT.Player(this.embedId, {
-				width: (this.videoWidth)? this.videoWidth : '640',
-				height: (this.videoHeight)? this.videoHeight : '360',
-				playerVars: (this.playerVars)? this.playerVars : {},
-				videoId: this.videoId,
+			this.player = new YT.Player(this._embedId, {
+				width: (this._videoWidth)? this._videoWidth : '640',
+				height: (this._videoHeight)? this._videoHeight : '360',
+				_playerVars: (this._playerVars)? this._playerVars : {},
+				_videoId: this._videoId,
 				events: {
-					'onReady': this._onPlayerReady.bind(this)
+					"_onReady": this._onPlayerReady.bind(this)
 				}
 			});
 
@@ -113,12 +127,14 @@ youtubeutil.playerapi = youtubeutil.playerapi || {};
 
 	// 4. The API will call this function when the video player is ready.
 	p._onPlayerReady = function(event) {
-		if(typeof this.onReady === "function") {
-			this.onReady(event, event.target, true);
+		if(typeof this._onReady === "function") {
+			this._onReady(event, event.target, true);
 		}
-		this.playerVars =
-		this.onReady = null;
+		this._playerVars =
+		this._onReady = null;
 	};
+
+
 	youtubeutil.playerapi.FallbackPlayer = FallbackPlayer;
 })();
 
@@ -135,13 +151,16 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 
 	/**
 	 *
-	 * @param embedId
-	 * @param videoId
-	 * @param videoWidth
-	 * @param videoHeight
-	 * @param onReady
-	 * @param playerVars
+	 * @class FallbackPlayer
+	 * @param embedId {string}
+	 * @param videoId {string}
+	 * @param videoWidth {number}
+	 * @param videoHeight {number}
+	 * @param onReady {function}
+	 * @param playerVars {object}
+	 * @uses Common
 	 * @constructor
+	 *
 	 */
 	var FallbackPlayer = function(embedId, videoId, videoWidth, videoHeight, onReady, playerVars) {
 		if(embedId && videoId) {
@@ -153,12 +172,13 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 	FallbackPlayer.build_query = function (a){function g(h,a){var b=[],c;for(c in a)a[c]instanceof Array||e(a[c])?b.push(g(h+"["+c+"]",a[c])):j(a[c])&&b.push(d(h+"["+c+"]")+"="+d(!0===a[c]?1:!1===a[c]?0:a[c]));return b.join("&")}function j(a){return"boolean"==typeof a||"string"==typeof a||"number"==typeof a}function d(a){return encodeURIComponent(a+"").replace(/!/g,"%21").replace(/'/g,"%27").replace(/\(/g,"%28").replace(/\)/g,"%29").replace(/\*/g,"%2A").replace(/%20/g,"+")}function e(a){return null!=a&&"object"==typeof a&& "[object Array]"!=Object.prototype.toString.call(a)}if(a instanceof Array||e(a)){var f=[],b;for(b in a)a[b]instanceof Array||e(a[b])?f.push(g(b,a[b])):j(a[b])&&f.push(d(b)+"="+d(!0===a[b]?1:!1===a[b]?0:a[b]));return f.join("&")}throw Error("Parameter 1 expected to be Array or Object.");};
 	/**
 	 *
-	 * @param embedId
-	 * @param videoId
-	 * @param videoWidth
-	 * @param videoHeight
-	 * @param onReady
-	 * @param playerVars
+	 * @method initPlayer
+	 * @param embedId {string}
+	 * @param videoId {string}
+	 * @param videoWidth {number}
+	 * @param videoHeight {number}
+	 * @param onReady {function}
+	 * @param playerVars {object}
 	 */
 	p.initPlayer = function (embedId, videoId, videoWidth, videoHeight, onReady, playerVars) {
 		videoWidth =  (videoWidth)? videoWidth : '640';

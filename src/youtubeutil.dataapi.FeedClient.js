@@ -9,32 +9,41 @@
 // Utilities for DATA API
 //-------------------------------------------------------------------------------------------------------------------
 
+// namespace
+var youtubeutil = youtubeutil || {};
+youtubeutil.dataapi = youtubeutil.dataapi || {};
+
 /**
- * youtubeutil.dataapi.FeedClient
  *
  * jquery.dataapi.youtubeutil.FeedClientから各Dataを取得
  *
+ * @class FeedClient
+ * @uses jquery.dataapi.youtubeutil.FeedClient
  * @static
- * @constructor
- * @see jquery.dataapi.youtubeutil.FeedClient
+ *
  */
-var youtubeutil = youtubeutil || {};
-youtubeutil.dataapi = youtubeutil.dataapi || {};
 youtubeutil.dataapi.FeedClient = (function() {
 
 	"use strict";
-	//constructor
-	var init = function(){
-		$feed = $.youtubeutil.dataapi.FeedClient.getInstance();
-		$($feed).on($.youtubeutil.events.VideoFeedEvent.VIDEO_PLAYLIST_DATA_RECEIVED, videoFeedEventHandler)
-	},
 
-	//private Property
-	$feed,
-	_playListUidList = [],
-	_playListCueList = [];
+ // mix-ins:
 
-	//public Methods
+ // private properties:
+	var $feed,
+		_playListUidList = [],
+		_playListCueList = [];
+
+// constructor:
+	/**
+	 *
+	 * @method init
+	 */
+	function init() {
+		$feed = $.youtubeutil.dataapi.FeedClient;
+		$($feed).on($.youtubeutil.events.VideoFeedEvent.VIDEO_PLAYLIST_DATA_RECEIVED, videoFeedEventHandler);
+	}
+
+// public methods:
 	/***
 	 *
 	 * @param {string} uid
@@ -56,7 +65,7 @@ youtubeutil.dataapi.FeedClient = (function() {
 		return true;
 	},
 
-	//private Methods
+// private methods:
 	runAcyncArray = function(params, onProcess) {
 		if(!params || !params.length){
 			return;
@@ -325,13 +334,10 @@ youtubeutil.dataapi.FeedClient = (function() {
 		};
 	})(CuePlayListVO.prototype);
 
-
-
 	var WorkListVO = function(plId, length) {
-		var plID = plId,
-		arraySetted = [],
+		var arraySetted = [],
 		that = {
-			"plID":plID,
+			"plID":plId,
 			"arraySetted":arraySetted
 		};
 		for (var i=0; i<length; i++) {

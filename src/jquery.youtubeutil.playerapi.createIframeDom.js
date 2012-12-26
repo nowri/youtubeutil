@@ -9,15 +9,26 @@
 // Utilities for PLAYER API
 //-------------------------------------------------------------------------------------------------------------------
 
-/**
- * jquery.youtubeutil.playerapi.createIframeDom
- *
- * Iframe版YoutubeのjQuery DOMオブジェクトを返してくれるやつです
- */
 ;(function ($) {
 	"use strict";
+
+// namespace:
 	$.youtubeutil = $.youtubeutil || {};
 	$.youtubeutil.playerapi = $.youtubeutil.playerapi || {};
+
+	/**
+	 * jquery.youtubeutil.playerapi.createIframeDom
+	 *
+	 * Iframe版YoutubeのjQuery DOMオブジェクトを返してくれるやつです
+	 *
+	 * @param videoId {string}
+	 * @param videoWidth {number}
+	 * @param videoHeight {number}
+	 * @param playerVars {object}
+	 * @param iframeId {string}
+	 * @method createIframeDom
+	 * @return {jQuery} jQuery IFrame DOMオブジェクト
+	 */
 	$.youtubeutil.playerapi.createIframeDom = function(videoId, videoWidth, videoHeight, playerVars, iframeId) {
 		if(!videoId){
 			alert("Errorrr!!!!!!!!!!!! : no argument videoId");
@@ -31,6 +42,7 @@
 				playerVarsStr = "?"+playerVarsStr;
 			}
 		}
+
 		return $("<iframe>", ((iframeId)? {id:iframeId}:{}))
 			.width((videoWidth)? videoWidth:640)
 			.height((videoHeight)? videoHeight:360)
@@ -42,3 +54,4 @@
 	};
 
 }(jQuery));
+

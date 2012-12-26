@@ -66,13 +66,17 @@ for(var c in a)tddjs.isOwnProperty(a,c)&&b(c,a[c]);if(c=f[typeof a])for(var d,e=
 Function.prototype.bind||function(){var c=Array.prototype.slice;Function.prototype.bind=function(a){var b=this;if(1<arguments.length){var d=c.call(arguments,1);return function(){var e=d;0<arguments.length&&(e=d.concat(c.call(arguments)));return b.apply(a,e)}}return function(){return 0<arguments.length?b.apply(a,arguments):b.call(a)}}}();
 
 
-/**
- * youtubeutil.Common
- *
- */
+
+// namespace:
 var youtubeutil = youtubeutil || {};
 (function(){
 	"use strict";
+
+	/**
+	*
+	* @class Common
+	* @static
+	*/
 	youtubeutil.Common = {
 		runAcyncArray : function(params, onProcess) {
 
@@ -98,3 +102,4 @@ var youtubeutil = youtubeutil || {};
 		}
 	};
 })();
+

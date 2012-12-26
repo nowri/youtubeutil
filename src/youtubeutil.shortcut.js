@@ -10,20 +10,21 @@
 // Shortcut
 //-------------------------------------------------------------------------------------------------------------------
 
+// namespace:
+
 /**
+ *
  * ショートカットクラス
  *
+ * @class YouTubeUtil
  * @static
- * @constructor
+ *
  */
 var YouTubeUtil = YouTubeUtil || {};
 (function(){
 	"use strict";
 	/**
-	 * @see youtubeutil.dataapi.FeedClient
-	 * @see youtubeutil.dataapi.FeedClient.loadPlayLists
+	 * @uses youtubeutil.dataapi.FeedClient
 	 */
 	YouTubeUtil.loadPlayLists = function(a,b,c){return youtubeutil.dataapi.FeedClient.loadPlayLists(a,b,c)};
 })();
-
-
