@@ -35,16 +35,13 @@
 
 	$(function() {
 		//"radiohead"を検索
-		$.youtubeutil.dataapi.FeedClient.getVideos("radiohead", "", "", "", "", "", null, null, {callBack:loadComplete});
+		$.youtubeutil.dataapi.FeedClient.getVideo("HS2BUr83O-8", {callBack:loadComplete});
 	});
 
 
 	function loadComplete(id, result){
 		console.log(result);
-		var feed = result["feed"];
 
-		console.log(feed["title"]["$t"]);
-		console.log(feed["entry"]);
 	}
 </script>
 </body>

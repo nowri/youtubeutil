@@ -36,14 +36,13 @@
 		 *
 		 * @param {string} videoId
 		 */
-		function getVideo(videoId) {
-			//TODO 未実装
+		function getVideo(videoId, option) {
 			var url = "http://gdata.youtube.com/feeds/api/videos/" + videoId,
 			query = {
 				"v":""+ version,
 				"alt":"json"
 			};
-			return runLoader(url, query, doVideoLoaded, { comment: "video", _videoId: videoId } );
+			return runLoader(url, query, doVideoLoaded, {callBack:option["callBack"], comment: "video", _videoId: videoId } );
 		}
 
 		/**
