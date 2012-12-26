@@ -31,7 +31,8 @@ youtubeutil.dataapi.FeedClient = (function() {
  // private properties:
 	var $feed,
 		_playListUidList = [],
-		_playListCueList = [];
+		_playListCueList = [],
+		e = $.youtubeutil.events;
 
 // constructor:
 	/**
@@ -40,7 +41,7 @@ youtubeutil.dataapi.FeedClient = (function() {
 	 */
 	function init() {
 		$feed = $.youtubeutil.dataapi.FeedClient;
-		$($feed).on($.youtubeutil.events.VideoFeedEvent.VIDEO_PLAYLIST_DATA_RECEIVED, videoFeedEventHandler);
+		$($feed).on(e.VideoFeedEvent.VIDEO_PLAYLIST_DATA_RECEIVED, videoFeedEventHandler);
 	}
 
 // public methods:
@@ -296,9 +297,9 @@ youtubeutil.dataapi.FeedClient = (function() {
 	},
 
 	//Event Handler
-	videoFeedEventHandler = function(e, id, json) {
-		switch(e.type){
-			case $.youtubeutil.events.VideoFeedEvent.VIDEO_PLAYLIST_DATA_RECEIVED:
+	videoFeedEventHandler = function(_e, id, json) {
+		switch(_e.type){
+			case e.VideoFeedEvent.VIDEO_PLAYLIST_DATA_RECEIVED:
 				var _feed = json["feed"];
 				var startIndex = _feed["openSearch$startIndex"]["$t"];
 				if(startIndex==1){

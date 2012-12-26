@@ -25,7 +25,8 @@
 	 * @type {{VIDEO_PLAYLIST_DATA_RECEIVED: string}}
 	 */
 	e.VideoFeedEvent = {
-		"VIDEO_PLAYLIST_DATA_RECEIVED":"videoPlaylistDataReceived"
+		"VIDEO_PLAYLIST_DATA_RECEIVED":"videoPlaylistDataReceived",
+		"VIDEO_DATA_RECEIVED":"video_data_received"
 	};
 
 	/**
@@ -36,6 +37,10 @@
 	 */
 	e.VideoDataEvent = {
 		"VIDEO_INFO_RECEIVED":"videoInfoReceived"
+	};
+
+	e.StandardVideoFeedEvent = {
+		"STANDARD_VIDEO_DATA_RECEIVED":"standard_video_data_received"
 	};
 
 }(jQuery));

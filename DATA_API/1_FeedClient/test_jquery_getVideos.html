@@ -1,0 +1,51 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="../../src/jquery.youtubeutil.events.js"></script>
+<script src="../../src/jquery.youtubeutil.Constants.js"></script>
+<script src="../../src/jquery.youtubeutil.dataapi.FeedClient.js"></script>
+<script type="text/javascript">
+// Avoid `console` errors in browsers that lack a console.
+(function() {
+    var method;
+    var noop = function noop() {};
+    var methods = [
+        'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+        'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+        'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+        'timeStamp', 'trace', 'warn'
+    ];
+    var length = methods.length;
+    var console = (window.console = window.console || {});
+
+    while (length--) {
+        method = methods[length];
+
+        // Only stub undefined methods.
+        if (!console[method]) {
+            console[method] = noop;
+        }
+    }
+}());
+
+	$(function() {
+		var SearchType = $.youtubeutil.Constants.SearchType;
+		$.youtubeutil.dataapi.FeedClient.getVideos("radiohead", "", "", "", "", "", null, null, {callBack:loadComplete});
+	});
+
+
+	function loadComplete(id, result){
+		console.log(result);
+		var feed = result["feed"];
+
+		console.log(feed["title"]["$t"]);
+		console.log(feed["entry"]);
+	}
+</script>
+</body>
+</html>
