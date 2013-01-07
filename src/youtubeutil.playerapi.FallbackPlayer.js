@@ -116,10 +116,10 @@ youtubeutil.playerapi = youtubeutil.playerapi || {};
 			this.player = new YT.Player(this._embedId, {
 				width: (this._videoWidth)? this._videoWidth : '640',
 				height: (this._videoHeight)? this._videoHeight : '360',
-				_playerVars: (this._playerVars)? this._playerVars : {},
-				_videoId: this._videoId,
+				playerVars: (this._playerVars)? this._playerVars : {},
+				videoId: this._videoId,
 				events: {
-					"_onReady": this._onPlayerReady.bind(this)
+					"onReady": this._onPlayerReady.bind(this)
 				}
 			});
 
