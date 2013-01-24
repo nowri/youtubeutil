@@ -39,6 +39,7 @@
 	 * @param {array} lists プレイリストIDの配列
 	 * @param {function} callBack ロードが終わった時に呼ばれる関数
 	 */
+
 	YouTubeUtil.loadPlayLists("hogeId", ["9CFE2CDB8ED74413"], loadComplete );
 	YouTubeUtil.loadPlayLists("hogeId2", ["R-Tp7khjHAA0IgGvmlHHM6Ep333eEDKA"], loadComplete );
 	YouTubeUtil.loadPlayLists("hogeId3", ["mmlOG6GNEONTZ3iq6AA2dXvuj8ALgrqv","R-Tp7khjHAA0IgGvmlHHM6Ep333eEDKA"], loadComplete );
@@ -49,6 +50,9 @@
 	YouTubeUtil.loadPlayLists("hogeId7", ["mmlOG6GNEOOq7-nwgwwvprQfIAQPAfwK","R-Tp7khjHAA0IgGvmlHHM6Ep333eEDKA"], loadComplete );
 	YouTubeUtil.loadPlayLists("hogeId8", ["mmlOG6GNEOM2bWzYtfqT_zaSUFNhFwb-","R-Tp7khjHAA0IgGvmlHHM6Ep333eEDKA"], loadComplete );
 
+	//空のプレイリスト dnTbTB9qfc1bZkVa6PNLapURFMQ-FezA
+	YouTubeUtil.loadPlayLists("hogeId9", ["dnTbTB9qfc1bZkVa6PNLapURFMQ-FezA"], loadComplete );
+
 	/***
 	 * @param {string} uid
 	 * @param {array} rawResult 生データ
@@ -56,7 +60,7 @@
 	 */
 	function loadComplete(uid, rawResult, result){
 
-		console.log("loadComplete", uid);
+		console.log(uid, " loadComplete", result);
 		$("body")
 			.append("<h1>load Complete</h1>")
 			.append("<p>id: "+uid+"</p>\n");

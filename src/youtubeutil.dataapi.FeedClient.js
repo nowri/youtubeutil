@@ -281,7 +281,7 @@ youtubeutil.dataapi.FeedClient = (function() {
 		if(!vo.videoLists[j][index]){
 			vo.videoLists[j][index] = [];
 		}
-
+		if(!_feed["entry"])return;
 		for(var k= 0,len=_feed["entry"].length; k<len; k++) {
 			data = _feed["entry"][k];
 			vo.videoLists[j][index].push(data);
