@@ -37,7 +37,7 @@
 		 * @param {string} videoId
 		 */
 		function getVideo(videoId, option) {
-			var url = "http://gdata.youtube.com/feeds/api/videos/" + videoId,
+			var url = "https://gdata.youtube.com/feeds/api/videos/" + videoId,
 			query = {
 				"v":""+ version,
 				"alt":"json"
@@ -61,7 +61,7 @@
 				"start-index":""+startIndex,
 				"max-results":""+maxResults
 			},
-			url = "http://gdata.youtube.com/feeds/api/playlists/" + playlistId;
+			url = "https://gdata.youtube.com/feeds/api/playlists/" + playlistId;
 			return runLoader(url, query, doPlaylistLoaded, {callBack:option["callBack"], comment:"playlist", playlistId:playlistId } );
 		}
 
@@ -73,7 +73,7 @@
 
 			startIndex = startIndex || 1;
 			maxResults = maxResults || 50;
-			var url = "http://gdata.youtube.com/feeds/api/standardfeeds/" + type,
+			var url = "https://gdata.youtube.com/feeds/api/standardfeeds/" + type,
 				query = {
 					"v":""+version,
 					"alt":"json",
@@ -100,7 +100,7 @@
 			search = search || "";
 			author = author || "";
 
-			var url = "http://gdata.youtube.com/feeds/api/videos",
+			var url = "https://gdata.youtube.com/feeds/api/videos",
 				query = {
 					"v":""+version,
 					"alt":"json",

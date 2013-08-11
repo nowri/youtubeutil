@@ -90,7 +90,7 @@ youtubeutil.playerapi = youtubeutil.playerapi || {};
 				};
 				// 2. This code loads the IFrame Player API code asynchronously.
 				var tag = document.createElement('script');
-				tag.src = "http://www.youtube.com/iframe_api";
+				tag.src = "https//www.youtube.com/iframe_api";
 				var firstScriptTag = document.getElementsByTagName('script')[0];
 				firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 				break;
@@ -203,7 +203,7 @@ var swfobject=function(){var D="undefined",r="object",S="Shockwave Flash",W="Sho
 		var atts = { id: embedId };
 		var query = (playerVars)? (FallbackPlayer.build_query(playerVars) || "") : "";
 		query=(query)? "&"+query : "";
-		swfobject.embedSWF("http://www.youtube.com/v/"+videoId+"?enablejsapi=1&playerapiid="+embedId+query,
+		swfobject.embedSWF("https://www.youtube.com/v/"+videoId+"?enablejsapi=1&playerapiid="+embedId+query,
 			embedId, videoWidth+"", videoHeight+"", "8", null, null, params, atts);
 	};
 	youtubeutil.playerapi.FallbackPlayer = FallbackPlayer;
